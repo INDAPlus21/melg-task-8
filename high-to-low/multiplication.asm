@@ -27,10 +27,8 @@
 main:
 	# Multiplication
 	# Set argument values
-	move $a0, $0
-	move $a1, $0
-	addi $a0, $a0, 4
-	addi $a1, $a1, 5 
+	addi $a0, $0, 4
+	addi $a1, $0, 5 
     
 	jal multiplication
 	
@@ -45,10 +43,8 @@ main:
     	syscall
 	
 	# Set argument values
-	move $a0, $0
-	move $a1, $0
-	addi $a0, $a0, 6
-	addi $a1, $a1, 3 
+	addi $a0, $0, 6
+	addi $a1, $0, 3 
     
 	jal multiplication
     
@@ -66,8 +62,7 @@ main:
     	
     	# Faculty
     	# Set argument values
-	move $a0, $0
-	addi $a0, $a0, 5
+	addi $a0, $0, 5
     
 	jal faculty
     
@@ -82,8 +77,7 @@ main:
     	syscall
     	
     	# Set argument values
-	move $a0, $0
-	addi $a0, $a0, 3
+	addi $a0, $0, 3
     
 	jal faculty
     
@@ -129,8 +123,7 @@ faculty:
 	PUSH($s3)
 	PUSH($s4)
 	move $s1, $ra                # Save return address
-	move $s2, $0			# Assign faculty value
-	addi $s2, $s2, 1
+	addi $s2, $0, 1			# Assign faculty value
 	move $s3, $a0			# Save input
 
     	# Loop 
