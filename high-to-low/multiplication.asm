@@ -35,7 +35,7 @@ main:
 	
 	# print output
     	li $v0, 1		# set system call code to "print integer"
-    	move $a0, $v1		# print s2	
+    	move $a0, $v1		# print	
     	syscall
     	
     	# print newline
@@ -53,7 +53,7 @@ main:
     
     	# print output
     	li $v0, 1		# set system call code to "print integer"
-    	move $a0, $v1		# print s2	
+    	move $a0, $v1		# print	
     	syscall
     	
     	# print newline
@@ -66,29 +66,44 @@ main:
     	# Faculty
     	# Set argument values
 	move $a0, $0
-	addi $a0, $a0, 3
+	addi $a0, $a0, 5
     
 	jal faculty
     
     	# print output
     	li $v0, 1		# set system call code to "print integer"
-    	move $a0, $v1		# print s2	
+    	move $a0, $v1		# print	
     	syscall
     	
     	# print newline
     	li $v0, 4
     	la $a0, newline
     	syscall
+    	
+    	# Set argument values
+	move $a0, $0
+	addi $a0, $a0, 3
+    
+	jal faculty
+    
+    	# print output
+    	li $v0, 1		# set system call code to "print integer"
+    	move $a0, $v1		# print	
+    	syscall
+    	
+    	# print newline
+    	li $v0, 4
+    	la $a0, newline
+    	syscall
+    	
+    	
     
     	# Exit program
    	li $v0, 10
     	syscall
 
 multiplication:
-	# Push stacks
-	#PUSH($s1)                       
-	#PUSH($s2)
-	move $s1, $ra                # Save return address
+	PUSH($s2)
 	move $s2, $0			# Assign sum value
 
     	# Loop 
@@ -101,10 +116,7 @@ multiplication:
 
 	# return value
 	move $v1 $s2
-
-    	# return parent values
-    	#POP($s1)
-    	#POP($s2)
+	POP($s2)
 
     	# return to parent
     	jr      $ra
@@ -114,32 +126,35 @@ faculty:
 	PUSH($s1)                       
 	PUSH($s2)
 	PUSH($s3)
+	PUSH($s4)
 	move $s1, $ra                # Save return address
-	move $s2, $0			# Assign multiplication value
+	move $s2, $0			# Assign faculty value
 	addi $s2, $s2, 1
 	move $s3, $a0			# Save input
 
     	# Loop 
-    	move $t0, $a0 # Start index
+    	move $s4, $a0 # Start index
  	
- 	facultyloop:
+ 	facultyloop: 	
     		# Multiply
-    		move $a0 $s2
-    		move $a1 $t0
+    		move $a0, $s2
+    		move $a1, $s4
     		jal multiplication
+		move $s2, $v1
 		
-		subi $t0, $t0, 1 # Add one to counter
-		bne $t0, $0 facultyloop # Continue loop if counter != 0
+		subi $s4, $s4, 1 # Add one to counter
+		bne $s4, $0, facultyloop # Continue loop if counter != 0
 
 	# return value
-	move $v1 $s2
+	move $v1, $s2
 
     	# return parent values
+    	move $ra, $s1
+    	
     	POP($s1)
     	POP($s2)
     	POP($s3)
-    	
-    	move $ra $s1
+    	POP($s4)
 
     	# return to parent
-    	jr      $ra
+    	jr $ra
