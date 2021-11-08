@@ -20,7 +20,7 @@
 .globl faculty
 
 .data
-	newline: .asciiz "\n"
+	new_line: .asciiz "\n"
 
 .text
 # For testing my functions
@@ -37,9 +37,9 @@ main:
     	move $a0, $v1		# print	
     	syscall
     	
-    	# print newline
+    	# print new_line
     	li $v0, 4
-    	la $a0, newline
+    	la $a0, new_line
     	syscall
 	
 	# Set argument values
@@ -53,9 +53,9 @@ main:
     	move $a0, $v1		# print	
     	syscall
     	
-    	# print newline
+    	# print new_line
     	li $v0, 4
-    	la $a0, newline
+    	la $a0, new_line
     	syscall
     	
     	
@@ -71,9 +71,9 @@ main:
     	move $a0, $v1		# print	
     	syscall
     	
-    	# print newline
+    	# print new_line
     	li $v0, 4
-    	la $a0, newline
+    	la $a0, new_line
     	syscall
     	
     	# Set argument values
@@ -86,9 +86,9 @@ main:
     	move $a0, $v1		# print	
     	syscall
     	
-    	# print newline
+    	# print new_line
     	li $v0, 4
-    	la $a0, newline
+    	la $a0, new_line
     	syscall
     	
     	
@@ -104,10 +104,10 @@ multiplication:
     	# Loop 
     	li $t0, 0 # Start index
  	
- 	multiplyloop:
+ 	multiply_loop:
  		addi $t0, $t0, 1 # Add one to counter
     		add $s2, $s2, $a1 # Add value
-		bne $a0, $t0 multiplyloop # Continue loop if counter != end value
+		bne $a0, $t0 multiply_loop # Continue loop if counter != end value
 
 	# return value
 	move $v1 $s2
@@ -129,7 +129,7 @@ faculty:
     	# Loop 
     	move $s4, $a0 # Start index
  	
- 	facultyloop: 	
+ 	faculty_loop: 	
     		# Multiply
     		move $a0, $s2
     		move $a1, $s4
@@ -137,7 +137,7 @@ faculty:
 		move $s2, $v1
 		
 		subi $s4, $s4, 1 # Add one to counter
-		bne $s4, $0, facultyloop # Continue loop if counter != 0
+		bne $s4, $0, faculty_loop # Continue loop if counter != 0
 
 	# return value
 	move $v1, $s2
