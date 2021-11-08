@@ -4,7 +4,9 @@
 
 primes:	.space  1000            # reserves a block of 1000 bytes in application memory
 err_msg: .asciiz "Invalid input! Expected integer n, where 1 < n < 1001.\n"
-space: .asciiz " "
+print_msg_prefix: .asciiz "The prime numbers from 2 to "
+print_msg_suffix: .asciiz " are the following: "
+space: .asciiz ", "
 
 ### Executable Code Section ###
 
@@ -73,6 +75,17 @@ main:
     	la $t0, primes # pointer
     	subi $t0, $t0, 1
     	subi $t1, $0, 1 # counter
+    	
+    	# print message
+    	la $a0, print_msg_prefix
+    	li $v0, 4
+    	syscall
+    	move $a0, $s0
+    	li $v0 1
+    	syscall
+    	la $a0, print_msg_suffix
+    	li $v0, 4
+    	syscall
     	
     	print_loop: 		
     		addi $t0, $t0, 1 # pointer++
