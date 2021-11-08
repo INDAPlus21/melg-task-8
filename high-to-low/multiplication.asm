@@ -17,6 +17,7 @@
 .end_macro
 
 .globl multiplication
+.globl faculty
 
 .data
 	newline: .asciiz "\n"
