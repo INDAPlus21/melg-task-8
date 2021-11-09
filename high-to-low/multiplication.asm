@@ -117,24 +117,17 @@ multiplication:
 	move $s2, $0			# Assign sum value
 
     	# Loop 
-    	li $t0, 0 # Start index
- 	
- 	beq $a0, $0, multiply_zero
- 	beq $a1, $0, multiply_zero
+    	subi $t0, $0, 1 # Start index
  	
  	multiply_loop:
  		addi $t0, $t0, 1 # Add one to counter
+ 		beq $a0, $t0 multiply_continue # Continue loop if counter != end value
     		add $s2, $s2, $a1 # Add value
-		bne $a0, $t0 multiply_loop # Continue loop if counter != end value
-
-	j multiply_return
+		j multiply_loop
 	
-	# Return 0
-	multiply_zero:
-	move $v1, $0
+	multiply_continue:
 
 	# return value
-	multiply_return:
 	move $v1, $s2
 	POP($s2)
 
@@ -152,30 +145,24 @@ faculty:
 	move $s3, $a0			# Save input
 
     	# Loop 
-    	move $s4, $a0 # Start index
- 	
- 	beq $a0, $0, faculty_zero
- 	
+    	addi $s4, $a0, 1 # Start index
+
  	faculty_loop: 	
+ 		subi $s4, $s4, 1 # Minus one to counter
+		beq $s4, $0, faculty_continue # Continue loop if counter != 0
+ 	
     		# Multiply
     		move $a0, $s2
     		move $a1, $s4
     		jal multiplication
 		move $s2, $v1
-		
-		subi $s4, $s4, 1 # Add one to counter
-		bne $s4, $0, faculty_loop # Continue loop if counter != 0
+		j faculty_loop
 
-	j faculty_return
+	faculty_continue:
 	
 	# return value
 	move $v1, $s2
 
-	# return 1
-	faculty_zero:
-	addi $v1, $0, 1
-
-	faculty_return:
     	# return parent values
     	move $ra, $s1
     	
